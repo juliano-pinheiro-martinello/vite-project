@@ -1,6 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuth } from "./context/userContext";
 
 interface IFormInput {
   usuario: string;
@@ -9,27 +11,27 @@ interface IFormInput {
 }
 
 export function Login() {
+  const navigate = useNavigate();
+  const [carregando, setCarregando] = useState(false);
+  const { signed, Login, user } = useAuth();
   const { register, handleSubmit } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) =>
     handleLogin(data.usuario, data.senha, data.sistema);
 
+  console.log(user);
+
   const handleLogin = useCallback(
     async (usuario: string, senha: string, sistema: string) => {
       try {
-        await axios
-          .post("https://api-auth.martinello.com.br/token/api/auth", {
-            usuario,
-            senha,
-            sistema,
-          })
-          .then((res) => {
-            console.log(res);
-          });
+        setCarregando(true);
+        await Login(usuario, senha, sistema);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }
+      setCarregando(false);
     },
-    [],
+    [Login],
   );
   return (
     <div>
@@ -47,7 +49,9 @@ export function Login() {
           <option>F0001 </option>
           <option>F0002 </option>
         </select>
-        <button type="submit">Entrar</button>
+        <button type="submit" disabled={carregando}>
+          {carregando ? "Aguarde..." : "Entrar"}
+        </button>
       </form>
     </div>
   );

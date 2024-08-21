@@ -5,20 +5,35 @@ import { Login } from "./login.tsx";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { UserProvider } from "./context/userContext.tsx";
+import { DetalhesProduto } from "./modules/Produto/index.tsx";
+import { Layout } from "./Layout/index.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Layout />,
     errorElement: <div> Ops! algo deu errado </div>,
-  },
-  {
-    path: "/login",
-    element: <Login />,
+    children: [
+      {
+        index: true,
+        element: <App />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/produto/:id",
+        element: <DetalhesProduto />
+      }
+    ]
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>,
 );

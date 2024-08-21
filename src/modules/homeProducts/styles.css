@@ -1,0 +1,27 @@
+.grid-produtos {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  gap: 10px;
+}
+
+.card-produtos {
+  text-align: left;
+  overflow: hidden;
+  height: 500px;
+  position: relative;
+  cursor: pointer;
+}
+
+.card-imagens {
+  object-fit: cover;
+  height: 350px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-produtos {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
