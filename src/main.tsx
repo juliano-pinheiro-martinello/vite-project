@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { UserProvider } from "./context/userContext.tsx";
 import { DetalhesProduto } from "./modules/Produto/index.tsx";
 import { Layout } from "./Layout/index.tsx";
+import { Cadastro } from "./modules/cadastro/index.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/produto/:id",
         element: <DetalhesProduto />
+      },
+      {
+        path: "/cadastrar",
+        element: <Cadastro />
       }
     ]
   },

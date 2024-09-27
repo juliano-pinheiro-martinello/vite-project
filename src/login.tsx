@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from "./context/userContext";
+import { Button } from "./components/button";
 
 interface IFormInput {
   usuario: string;
@@ -52,6 +53,7 @@ export function Login() {
         <button type="submit" disabled={carregando}>
           {carregando ? "Aguarde..." : "Entrar"}
         </button>
+        <Button onClick={() => navigate("/cadastrar")} children="Cadastrar" />
       </form>
     </div>
   );
